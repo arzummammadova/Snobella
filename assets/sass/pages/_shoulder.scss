@@ -1,0 +1,38 @@
+.road{
+    font-size: 14px;
+    .active-road{
+        color: grey;
+    }
+}
+
+
+.shoulder{
+    h1{
+        margin-top: 20px;
+        font-size:35px;
+    }
+}
+.shoulderproducts{
+    display: flex;
+    padding-bottom: 50px;
+    flex-wrap: wrap!important;
+    width: 100%;
+    gap: 1rem 5.4rem !important;
+    justify-content: start!important;
+    // padding: 0px !important;
+
+}
+
+.container-sh{
+  
+    width: 100%!important;
+}
+
+.shouldercart{
+    width: 40%!important;
+  
+}
+
+#sort-select{
+    padding: 0.5rem 2rem;
+}

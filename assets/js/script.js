@@ -147,7 +147,7 @@ function toggleFavorite(productId, heartIcon) {
         favoriteProducts = favoriteProducts.filter(id => id !== productId);
         heartIcon.src = './assets/icons/hearticon.svg';
         var toast = new Toasty();
-        toast.error("Product added to favorites");
+        toast.error("Product deleted to favorites");
     } else {
         favoriteProducts.push(productId);
         heartIcon.src = './assets/icons/hearticonfill.svg';
