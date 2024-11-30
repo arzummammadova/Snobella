@@ -59,7 +59,7 @@ function createProductCard(product, container) {
   if (product.prevPrice) {
     const prevPrice = document.createElement("span");
     prevPrice.className = "prevprice";
-    prevPrice.textContent = `From $${product.prevPrice}`;
+    prevPrice.textContent = From `$${product.prevPrice}`;
     card.appendChild(prevPrice);
   }
 
@@ -73,12 +73,12 @@ function createProductCard(product, container) {
   });
 
   card.appendChild(btnCard);
+
   card.addEventListener("click", (event) => {
     event.stopPropagation();
-    localStorage.setItem('selectedProductId', product.id);
-    window.location.href = `product-details.html`;
+    localStorage.setItem('selectedProductId', product.id); 
+    window.location.href = `details.html?id=${product.id}`; 
   });
-  card.appendChild(btnCard);
 
   const newButton = document.createElement("button");
   newButton.className = "btn-lt btn-green";
@@ -101,76 +101,33 @@ function createProductCard(product, container) {
 }
 
 function toggleFavorite(productId, heartIcon) {
- 
   if (favoriteProducts.includes(productId)) {
-     
-      favoriteProducts = favoriteProducts.filter(id => id !== productId);
-      heartIcon.src = './assets/icons/hearticon.svg';
-      var toast = new Toasty();
-      toast.error("Product removed from favorites");
+    favoriteProducts = favoriteProducts.filter(id => id !== productId);
+    heartIcon.src = './assets/icons/hearticon.svg';
+    var toast = new Toasty();
+    toast.error("Product removed from favorites");
   } else {
-    
-      favoriteProducts.push(productId);
-      heartIcon.src = './assets/icons/hearticonfill.svg';
-      var toast = new Toasty();
-      toast.success("Product added to favorites");
+    favoriteProducts.push(productId);
+    heartIcon.src = './assets/icons/hearticonfill.svg';
+    var toast = new Toasty();
+    toast.success("Product added to favorites");
   }
-  
 
   localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
 }
-
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-  updateCartCount();
-
-  products = await getDatas(productURL);
-  const savedSortOrder = localStorage.getItem('sortOrder') || 'normal';
-  let sortedProducts = [...products];
-  if (savedSortOrder !== 'normal') {
-    sortedProducts = applySortOrder(savedSortOrder, sortedProducts);
-  }
-
-  const limitedProducts = sortedProducts.slice(0, 12);
-  updateProductDisplay(limitedProducts);
-
-  const sections = ['#featuredproducts', '#sellingproducts', '#newproducts'];
-
-  sections.forEach(async sectionId => {
-    let section = document.querySelector(sectionId);
-    if (!section) return;
-
-    let productSubset = limitedProducts;
-    if (sectionId === '#sellingproducts') {
-      productSubset = limitedProducts.slice(0, 5);
-    }
-
-    const cardContainer = section.querySelector('.featuredproducts_cards');
-    if (!cardContainer) return;
-
-    cardContainer.innerHTML = '';
-    productSubset.forEach(product => {
-      createProductCard(product, cardContainer);
-    });
-  });
-});
-
 
 function updateFavorites() {
   const cards = document.querySelectorAll('.featuredproducts_cards_card');
   cards.forEach(card => {
     const productId = card.dataset.productId;
-    const product = products.find(p => p.id == productId);
     const heartImg = card.querySelector('.heart img');
     
-    if (product && heartImg) {
-      const isFavorite = favoriteProducts.some(favProduct => favProduct.id === product.id);
+    if (heartImg) {
+      const isFavorite = favoriteProducts.includes(productId);
       heartImg.src = isFavorite ? "./assets/icons/hearticonfill.svg" : "./assets/icons/hearticon.svg";
     }
   });
 }
-
 
 function updateCartCount() {
   const basketCountElement = document.querySelector('.basket-count');
@@ -184,18 +141,6 @@ function addToCart(product) {
   toast.info("Product added to basket!");
   updateCartCount();
 }
-
-searchInput.addEventListener('input', () => {
-  const searchValue = searchInput.value.toLowerCase();
-  const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchValue));
-  updateProductDisplay(filteredProducts);
-});
-
-searchButton.addEventListener('click', () => {
-  const searchValue = searchInput.value.toLowerCase();
-  const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchValue));
-  updateProductDisplay(filteredProducts);
-});
 
 function updateProductDisplay(sortedProducts) {
   const container = document.querySelector(".featuredproducts_cards");
@@ -214,78 +159,38 @@ function handleSortChange(event) {
 
 async function createCards() {
   try {
-    products = await getDatas(`${productURL}`);
-    const limitedProducts = products.slice(0, 12);
-
+    products = await getDatas(productURL);
     const savedSortOrder = localStorage.getItem('sortOrder') || 'normal';
-    const sortedProducts = applySortOrder(savedSortOrder, limitedProducts);
-
+    let sortedProducts = applySortOrder(savedSortOrder, products);
     updateProductDisplay(sortedProducts);
 
     const sortSelect = document.querySelector("#sort-select");
     sortSelect.addEventListener("change", handleSortChange);
-
     sortSelect.value = savedSortOrder;
-
   } catch (error) {
     console.error("Error fetching products:", error);
   }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
-
-  products = await getDatas(productURL);
-  const savedSortOrder = localStorage.getItem('sortOrder') || 'normal';
-  let sortedProducts = [...products];
-  if (savedSortOrder !== 'normal') {
-    sortedProducts = applySortOrder(savedSortOrder, sortedProducts);
-  }
-
-  const limitedProducts = sortedProducts.slice(0, 12);
-  updateProductDisplay(limitedProducts);
-
-  const sections = ['#featuredproducts', '#sellingproducts', '#newproducts'];
-
-  sections.forEach(async sectionId => {
-    let section = document.querySelector(sectionId);
-    if (!section) return;
-
-    let productSubset = limitedProducts;
-    if (sectionId === '#sellingproducts') {
-      productSubset = limitedProducts.slice(0, 5);
-    }
-
-    const cardContainer = section.querySelector('.featuredproducts_cards');
-    if (!cardContainer) return;
-
-    cardContainer.innerHTML = '';
-    productSubset.forEach(product => {
-      createProductCard(product, cardContainer);
-    });
-  });
+  createCards();
 });
 
 function toggleMenu() {
   const logo = document.getElementById('logo');
-  const navItems = document.querySelectorAll('.nav_top .search-container, .nav_top .group, .nav_top .nav-link-pages,.basket-count');
+  const navItems = document.querySelectorAll('.nav_top .search-container, .nav_top .group, .nav_top .nav-link-pages, .basket-count');
   const burgerMenu = document.querySelector('.burger-menu');
   burgerMenu.addEventListener("click", () => {
-    navItems.forEach(item => {
-      item.classList.toggle('none');
-      item.style.display = 'flex';
-    });
+    navItems.forEach(item => item.classList.toggle('none'));
     logo.classList.toggle('none');
   });
+
   if (window.innerWidth <= 992) {
-    navItems.forEach(item => {
-      item.classList.add('none');
-    });
+    navItems.forEach(item => item.classList.add('none'));
     burgerMenu.classList.remove('none');
   } else {
-    navItems.forEach(item => {
-      item.classList.remove('none');
-    });
+    navItems.forEach(item => item.classList.remove('none'));
     burgerMenu.classList.add('none');
   }
 }
@@ -293,4 +198,14 @@ function toggleMenu() {
 window.addEventListener('resize', toggleMenu);
 toggleMenu();
 
-document.addEventListener("DOMContentLoaded", createCards);
+searchInput.addEventListener('input', () => {
+  const searchValue = searchInput.value.toLowerCase();
+  const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchValue));
+  updateProductDisplay(filteredProducts);
+});
+
+searchButton.addEventListener('click', () => {
+  const searchValue = searchInput.value.toLowerCase();
+  const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchValue));
+  updateProductDisplay(filteredProducts);
+});

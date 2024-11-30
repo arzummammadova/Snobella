@@ -1,5 +1,4 @@
 
-
 export const getDatas = async (url) => {
     try {
         let { data } = await axios.get(url);
