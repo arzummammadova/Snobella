@@ -1,0 +1,66 @@
+.header{
+    background-color: map-get($map: $mainColors, $key:bg-color );
+   padding: 1.2rem 0rem;
+   color: map-get($map: $mainColors, $key: main-text-color);
+   font-family: 'Poppins';
+   .container
+   {
+    .header_top{
+      
+        @include flex(space-between);
+        &_left{
+           a{
+            color: map-get($map: $textColors, $key: main-text-color);
+           }
+            @include flex;
+            gap: 2rem;
+              img{
+            width: 2.4rem;
+            height: 2.4rem;
+            
+        }
+        }
+        &_right{
+            p{
+                color: map-get($map: $textColors, $key: main-text-color);
+            }
+            a{cursor: pointer;
+                    color: map-get($map: $textColors, $key: main-text-color);}
+            @include flex;
+            gap: 2rem;
+            a{
+                color: map-get($map: $textColors, $key: main-text-color);
+            }
+        }
+  
+     }
+
+}
+}
+
+
+@media (max-width:768px){
+
+.header .container .header_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header .container .header_top_right {
+   
+    font-size: 1.2rem;
+    flex-direction: row;
+    gap: 1rem;
+}
+.header .container .header_top_left {
+    font-size: 1.2rem;
+    gap: 1rem;
+    img{
+        display: none;
+    }
+}
+
+}
+

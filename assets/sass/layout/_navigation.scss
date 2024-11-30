@@ -1,0 +1,222 @@
+
+
+
+.header {
+    background-color: map-get($map: $mainColors, $key: bg-color);
+    padding: 1.2rem 0;
+    color: map-get($map: $mainColors, $key: main-text-color);
+    font-family: 'Poppins';
+  
+    .container {
+      .header_top {
+        @include flex(space-between);
+  
+        &_left {
+          a {
+            color: map-get($map: $textColors, $key: main-text-color);
+          }
+          @include flex;
+          gap: 2rem;
+          img {
+            width: 2.4rem;
+            height: 2.4rem;
+          }
+        }
+  
+        &_right {
+          p {
+            color: map-get($map: $textColors, $key: main-text-color);
+          }
+          a {
+            cursor: pointer;
+            color: map-get($map: $textColors, $key: main-text-color);
+          }
+          @include flex;
+          gap: 2rem;
+          a {
+            color: map-get($map: $textColors, $key: main-text-color);
+          }
+        }
+      }
+    }
+  }
+  
+  
+  @media (max-width: 768px) {
+    .header .container .header_top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+    }
+  
+    .header .container .header_top_right {
+      font-size: 1.2rem;
+      flex-direction: row;
+      gap: 1rem;
+    }
+  
+    .header .container .header_top_left {
+      font-size: 1.2rem;
+      gap: 1rem;
+      img {
+        display: none;
+      }
+    }
+  }
+  
+
+  .header-bottom {
+    width: 100%;
+    z-index: 500;
+    position: sticky;
+    top: 0; 
+    background-color: white; 
+  }
+  
+  .nav {
+    background-color: white;
+  
+    &_top {
+      background-color: white;
+      position: relative;
+      font-family: 'Palanquin';
+      @include flex(space-between);
+  
+      a {
+        font-size: 40px;
+        font-weight: 700;
+      }
+      gap: 50px;
+  
+      img {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+  
+      .group {
+        width: 6rem;
+        height: 8rem;
+      }
+  
+      .nav-link-pages {
+        font-size: 18px;
+        font-weight: 500;
+      }
+  
+      .search-container {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+  
+        .search {
+          width: 100%;
+          padding: 0.8rem 1.4rem;
+          padding-right: 4rem;
+          box-sizing: border-box;
+          background-color: map-get($map: $mainColors, $key: grey-bg);
+          border: 1rem solid map-get($map: $mainColors, $key: grey-bg);
+        }
+  
+        .searchicon {
+          position: absolute;
+          right: 1.4rem;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
+          fill: var(--border-color);
+        }
+      }
+    }
+  }
+  
+
+  .burger-menu {
+    display: none;
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .nav-bottom {
+    padding:0.2rem;
+  
+    .nav_menu {
+      .nav_list {
+        @include flex(start);
+        gap: 4rem;
+      }
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .nav-bottom .nav_menu .nav_list {
+      gap: 2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    // .header-bottom .nav_top .search-container .search {
+    //   display: none;
+    // }
+  
+    // .searchicon {
+    //   display: none;
+    // }
+  
+    // .group {
+    //   display: none;
+    // }
+  
+    .nav {
+        flex-direction: column;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+    }
+    .nav_top a{
+        font-size: 14px;
+    }
+    .nav-bottom .nav_menu .nav_list{
+        display: none;
+    }
+    .header-bottom .nav_top {
+        gap: 3rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .header-bottom .nav_top{
+        gap: 0px;
+    }
+
+}
+@media (max-width: 992px) {
+    .header-bottom .nav_top {
+        gap: 0rem;
+        flex-direction: column;
+    }
+}
+    .burger-menu {
+      display: block;
+    }
+  
+    // .nav {
+    //   justify-content: space-between;
+    //   display: flex;
+    //   align-items: center;
+    // }
+  
+
+
+
+  .none{
+    display: none!important;
+  }
+
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 500;
+    box-shadow: 0 4px 2px -2px gray;
+  }
+  

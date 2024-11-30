@@ -1,0 +1,134 @@
+#footer {
+    font-family: 'Palanquin';
+    margin-top: 8rem 0rem;
+    background-color: map-get($map: $mainColors, $key: grey-bg);
+
+    .footer_top {
+        @include flex(space-between);
+        border: none;
+        border-bottom: 1px solid map-get($map: $btnColors, $key: border);
+
+
+        a {
+            font-size: 4rem;
+            font-weight: 700;
+        }
+
+        .searchicon {
+            position: absolute;
+            left: 81.5%;
+            @include icon;
+        }
+
+        input.search {
+            padding: 0px 1rem;
+            width: 50.4rem;
+            height: 4.5rem;
+            margin: 0rem 7rem;
+            padding: 0.8rem;
+            background-color: map-get($map: $mainColors , $key: white);
+            border: 1px solid map-get($map: $mainColors , $key: grey-bg);
+
+        }
+    }
+    .footer_bottom{
+       
+        color:  $footer-text;
+        margin-top: 4rem;
+      @include flex(start,start);
+      gap: 18rem;
+        &_left{
+            width: 30%;
+           @include flex(start,start,column);
+           gap: 1.7rem;
+
+            &_contact{
+                a{
+                    color:  $footer-text;
+                }
+                img{
+                    @include icon;
+                    cursor: pointer;
+                }
+                @include flex();
+                gap: 2rem;
+            }
+            .send{
+                cursor: pointer;
+                margin-top: 2rem;
+                img{
+                    @include icon;
+                }
+                width: 179px;
+                height: 48px;
+              
+                border-radius: 8px ;
+                border: 1px solid map-get($map: $mainColors, $key: black) ;
+               
+                @include flex();
+                padding: 1rem 2rem;
+                gap: 1rem;
+            }
+           
+        }
+        &_right{
+        width: 70%;
+        @include flex(start,start);
+        gap: 4rem;
+        &_contact{
+            a{
+                display: block;
+                color:  $footer-text;
+            }
+            h2{
+              
+                font-size: 1.8rem;
+               color: $black;
+            }
+        }
+       
+        }
+    }
+
+    .copyright{
+        padding: 2rem 0rem;
+        margin-top: 8rem;
+        background-color:map-get($map: $mainColors, $key:white );
+        &_text{
+             @include flex(space-between);
+             &_right{
+                a{
+                    cursor: pointer;
+                    img{
+                        @include icon(1.8rem,1.8rem );
+                    }
+                }
+             }
+        }
+       
+
+    }
+}
+
+
+
+
+@media (max-width:768px){
+    #footer .footer_bottom{
+        flex-direction:column-reverse;
+        gap: 3rem;
+        &_right{
+            width: 100%;
+        }
+        &_left{
+            width: 100%;
+        }
+     
+    }
+    #footer .footer_top{
+          flex-direction: column;
+          input.search{
+            width: 100%;
+          }  
+    }
+}

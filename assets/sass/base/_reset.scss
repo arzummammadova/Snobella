@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.6rem;
+  background-color: map-get($map: $mainColors, $key: maincolor);
+}
+
+a {
+  text-decoration: none;
+  color: map-get($map: $textColors, $key: text-color);
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+figure{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

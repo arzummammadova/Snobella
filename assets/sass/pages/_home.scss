@@ -1,0 +1,795 @@
+#hero {
+    background-color: map-get($map: $mainColors, $key: bg-pink);
+    height: 584px;
+    transition: background 1s ease-in-out;
+
+
+    .container {
+        display: flex;
+        overflow: hidden;
+
+        .hero {
+            min-width: 100%;
+            display: none;
+            gap: 5rem;
+            @include flex();
+            transition: opacity 1s ease-in-out;
+
+            &.active {
+                display: flex;
+                opacity: 1;
+            }
+
+            .hero__left {
+                margin-top: 5rem;
+                width: 45%;
+
+                &__desc {
+                    color: map-get($map: $btnColors, $key: red);
+                    @include textrubik(3rem, 600);
+
+                }
+
+                &__title {
+                    @include text(4rem, 900, 6.8rem);
+                }
+
+                &__subtitle {
+                    color: map-get($map: $textColors, $key: text-color-a);
+                    font-size: 2rem;
+                    margin-top: 2rem;
+                }
+
+                a {
+                    background-color: map-get($map: $mainColors, $key: bg-color);
+                    color: map-get($map: $textColors, $key: main-text-color);
+                    padding: 16px 53px;
+                    border-radius: 8px;
+                    margin-top: 5rem;
+                    display: inline-block;
+
+
+                    &:hover {
+
+                        background-color: map-get($map: $mainColors, $key: bg-color-a);
+                        transition: all 0.3s;
+                    }
+                }
+
+                .circles {
+                    display: flex;
+                    gap: 10px;
+                    padding-top: 5rem;
+
+
+                    .circle {
+                        background-color: grey;
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 100%;
+
+                    }
+
+                    .active {
+                        background-color: #DF4244;
+                        border-radius: 10px;
+                        width: 23px;
+                        height: 12px;
+
+                    }
+                }
+
+            }
+
+            .hero__right {
+                margin-top: 4rem;
+                width: 55%;
+
+                img {
+                    width: 100%;
+                    height: 44rem;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+
+}
+
+.basket-count {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    background-color: #f00;
+    color: white;
+    border-radius: 100%;
+    padding: 1.4px 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.basket {
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .basket-count {
+        top: 91px;
+        right: 40px;
+        font-size: 8px;
+        padding: 1px 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .basket-count {
+        top: 100px;
+        right: 35px;
+
+        font-size: 7px;
+        padding: 1px 3px;
+    }
+}
+
+
+
+.control-panel {
+    .containerr {
+        position: relative;
+        margin-top: 10px;
+        //   margin-left: 50px;
+        height: 70px;
+    }
+
+    .button {
+        color: #E3DFE9;
+        font-size: 14px;
+        background: white;
+        width: 203px;
+        padding: 13px 16px;
+        box-shadow: 3px 3px 30px rgba(118, 96, 168, 0.2);
+        border-radius: 15px;
+        display: inline-block;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+
+    }
+
+    .button:hover {
+        color: #DBD7E0;
+        transform: translateY(3px);
+        box-shadow: 3px 3px 30px rgba(118, 96, 168, 0.17);
+    }
+
+    .arrow {
+        width: 13px;
+        transition: transform 0.3s ease;
+    }
+
+    .arrow.open {
+        transform: rotate(180deg);
+    }
+
+    .button p {
+        display: inline;
+        margin-right: 75px;
+    }
+
+    .dropdown {
+        position: relative;
+        color: #E3DFE9;
+        font-size: 18px;
+        background: white;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 15px;
+        display: block;
+        cursor: pointer;
+        width: 235px;
+        transform: scale(0.01);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease 0.15s;
+        transform-origin: center top;
+        overflow: hidden;
+    }
+
+    .dropdown.open {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 3px 3px 30px rgba(118, 96, 168, 0.15);
+    }
+
+    .dropdown a {
+        position: relative;
+        color: #6C6185;
+        text-decoration: none;
+        display: block;
+        padding: 12.5px 30px;
+        transition: color 0.2s ease, background-color 0.2s ease, padding-left 0.2s ease;
+        overflow: hidden;
+    }
+
+    .dropdown a.clicked {
+        padding-left: 35px;
+        color: #987CD9;
+    }
+
+    .dropdown a:hover {
+        color: #987CD9;
+        padding-left: 35px;
+    }
+
+    span {
+        z-index: -1;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 0px;
+        position: absolute;
+        background: #987CD9;
+        transition: width 0.4s ease;
+        border-radius: 1px;
+    }
+
+    span.clicked {
+        width: 5px;
+    }
+}
+
+
+#transport {
+    background-color: map-get($map: $mainColors, $key: grey-bgg);
+
+    .container {
+        .transport {
+
+            margin: 0 auto;
+            padding: 4.8rem 0rem;
+            gap: 4rem;
+            @include flex();
+
+            a {
+                cursor: pointer;
+                display: block;
+                width: calc(100%/4 - 4rem);
+
+                img {
+                    width: 100%;
+                    height: 4.8rem;
+
+                }
+            }
+
+        }
+    }
+}
+
+#product {
+    margin: 8rem;
+    font-family: "Poppins";
+
+    .product {
+        &__cards {
+            @include flex();
+            position: relative;
+            gap: 2.5rem;
+
+            .right-arroww {
+                .arrow {
+                    @include icon(2.3rem, 2.3rem);
+                }
+
+                width: 4rem;
+                height: 4rem;
+                @include flex();
+                position: absolute;
+                left: 100%;
+                border-radius: 4rem;
+                background: map-get($map: $mainColors, $key: white);
+                border: 1px solid map-get($map: $mainColors, $key: grey);
+
+            }
+
+            &__card {
+                border-radius: 0.8rem;
+                @include card;
+                display: flex;
+                flex-direction: column;
+
+                justify-content: flex-start;
+
+                p {
+                    @include text(1.8rem, 600);
+                    display: inline;
+                }
+
+                figure {
+                    display: flex;
+                    justify-content: flex-end;
+
+                    img {
+                        width: 19.3rem;
+                        height: 15.5rem;
+                    }
+
+
+
+                }
+
+            }
+        }
+
+    }
+
+    .right-arrowside {
+        position: absolute;
+        left: 100%;
+        top: 113%;
+
+        .aroww {
+            @include icon;
+
+
+        }
+    }
+}
+
+
+#featuredproducts {
+    padding: 9.6rem 0rem;
+
+    .container {
+        .featuredproducts {
+
+            &_title {
+
+                @include flex(space-between);
+
+                h2 {
+                    font-size: 3.2rem;
+                }
+
+                p {
+                    font-size: 2rem;
+                }
+
+                img {
+                    @include icon(1.6rem, 1.6rem);
+                }
+
+                &_right {
+                    @include flex();
+                    gap: 1.5rem;
+                    cursor: pointer;
+                }
+            }
+
+
+            &_cards {
+                position: relative;
+                gap: 2.4rem;
+                border-radius: $radius;
+                margin-top: 3.2rem;
+                @include flex();
+
+                .left-arrow,
+                .right-arrow {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+
+                .left-arrow {
+                    left: 3rem;
+                    z-index: 5;
+                    @include arrow;
+
+                    img {
+                        @include icon(2.1rem, 2.1rem);
+                    }
+                }
+
+                .right-arrow {
+                    right: 3rem;
+                    z-index: 5;
+                    @include arrow;
+
+                    img {
+                        @include icon(2.1rem, 2.1rem);
+                    }
+
+                }
+
+                &_card {
+
+
+                    position: relative;
+                    padding: 2.4rem;
+                    background-color: map-get($map: $cardColors, $key: cardbg);
+                    width: calc(100%/3 - 4rem);
+                    height: 500px;
+
+                    &_top {
+                        figure {
+                            @include flex();
+
+                            img {
+                                width: 21.8rem;
+                                height: 24.3rem;
+                            }
+
+                        }
+
+                        .star {
+                            @include icon(1.6rem, 1.6rem);
+                        }
+                    }
+
+                    p {
+                        @include rubik;
+                    }
+
+                    .price {
+                        @include poppins;
+                        color: map-get($map: $textColors, $key: text-color-red);
+                    }
+
+                    .prevprice {
+                        @include poppins(400, 1.5rem);
+                        margin-left: 1rem;
+                        color: map-get($map: $textColors , $key: text-color-grey);
+
+                    }
+
+                    .btn-card {
+                        margin-top: 3rem;
+
+                    }
+                }
+
+                .heart {
+                    position: absolute;
+                    right: 1.6rem;
+                    top: 1.6rem;
+
+                    img {
+                        @include icon(2.2rem, 2.2rem);
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+#sellingproducts {
+    background-color: #FFF7F7;
+
+    padding: 9.6rem 0rem;
+
+    .container {
+        .featuredproducts {
+
+            &_title {
+
+                @include flex(space-between);
+
+                h2 {
+                    font-size: 3.2rem;
+                }
+
+                p {
+                    font-size: 2rem;
+                }
+
+                img {
+                    margin-left: 1rem;
+                    @include icon(1.6rem, 1.6rem);
+                }
+
+                &_right {
+                    @include flex();
+                    // gap: 1.5rem;
+                    cursor: pointer;
+                }
+            }
+
+
+            &_cards {
+                position: relative;
+                gap: 2.4rem;
+                border-radius: $radius;
+                margin-top: 3.2rem;
+                @include flex();
+
+                .left-arrow,
+                .right-arrow {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+
+                .left-arrow {
+                    left: 3rem;
+                    z-index: 5;
+                    @include arrow;
+
+                    img {
+                        @include icon(2.1rem, 2.1rem);
+                    }
+                }
+
+                .right-arrow {
+                    right: 3rem;
+                    z-index: 5;
+                    @include arrow;
+
+                    img {
+                        @include icon(2.1rem, 2.1rem);
+                    }
+
+                }
+
+                &_card {
+
+
+                    position: relative;
+                    padding: 2.4rem;
+                    background-color: white;
+                    width: calc(100%/3 - 4rem);
+                    height: 500px;
+
+                    &_top {
+                        figure {
+                            @include flex();
+
+                            img {
+                                width: 21.8rem;
+                                height: 24.3rem;
+                            }
+
+                            .imgsellerr {
+
+                                width: 21.8rem !important;
+                                height: 12.3rem !important;
+
+                                margin: 10rem 0rem 2.4rem 0rem;
+                                padding-top: 2rem;
+                            }
+
+                            .imgselleer {
+
+                                width: 21.8rem !important;
+                                height: 15.3rem !important;
+                                margin: 6.5rem 0rem 2.4rem 0rem;
+
+                            }
+
+                        }
+
+                        .star {
+                            @include icon(1.6rem, 1.6rem);
+                        }
+                    }
+
+                    p {
+                        @include rubik;
+                    }
+
+                    .price {
+                        @include poppins;
+                        color: map-get($map: $textColors, $key: text-color-red);
+                    }
+
+                    .prevprice {
+                        @include poppins(400, 1.5rem);
+                        margin-left: 1rem;
+                        color: map-get($map: $textColors , $key: text-color-grey);
+
+                    }
+
+                    .btn-card {
+                        margin-top: 3rem;
+
+                    }
+                }
+
+                .heart {
+                    position: absolute;
+                    right: 1.6rem;
+                    top: 1.6rem;
+
+                    img {
+                        @include icon(2.2rem, 2.2rem);
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+@media (max-width:992px) {
+    .nav {
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+    }
+    #product .product__cards{
+
+        flex-direction: column;
+    }
+    .control-panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+#hero .container .hero .hero__right img {
+    height: 39rem;
+}
+img{
+    cursor: pointer;
+}
+#product .product__cards {
+    display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    // flex-direction: row;
+
+    gap: 2.5rem;
+}
+
+#product {
+    margin: 3rem;
+}
+
+.nav-bottom .nav_menu .nav_list {
+    font-size: 1.2rem;
+}
+
+.header-bottom .nav_top .search-container .searchicon {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+
+.header-bottom .nav_top {
+    gap: 0rem 3rem;
+
+    .group {
+        width: 5rem;
+        height: 4rem;
+
+    }
+
+
+}
+
+.nav_top .nav-link-pages {
+    font-size: 14px;
+}
+
+
+@media (max-width:768px) {
+    .header-bottom .nav_top {
+        gap: 0rem;
+
+        .group {
+            width: 4rem;
+            height: 3rem;
+
+        }
+
+
+    }
+
+    #hero .container .hero {
+        gap: 0px;
+        flex-direction: column-reverse;
+
+        .hero__right img {
+            height: 24rem;
+
+        }
+
+        .hero__left {
+            width: 100%;
+            margin-top: 5rem;
+
+            a {
+                margin-top: 2rem;
+            }
+
+            &__desc {
+                font-size: 1.6rem;
+                font-weight: 500;
+                line-height: 1.6px;
+            }
+
+        }
+    }
+
+    #featuredproducts .container .featuredproducts_cards {
+        flex-direction: column;
+
+        &_card {
+            width: 100%;
+        }
+    }
+
+    #sellingproducts .container .featuredproducts_cards {
+        flex-direction: column;
+
+        &_card {
+            width: 100%;
+        }
+    }
+
+    #hero .container .hero .hero__left__title {
+        font-size: 3rem;
+        line-height: 1;
+        margin: 3rem 0rem;
+    }
+
+    #hero .container .hero .hero__left__subtitle {
+        color: rgba(33, 33, 33, 0.7490196078);
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    #featuredproducts .container .featuredproducts_title {
+        flex-direction: column;
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        img {
+            display: none;
+        }
+
+        p {
+            font-size: 1.4rem;
+        }
+    }
+
+    #sellingproducts .container .featuredproducts_title {
+
+        flex-direction: column;
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1.4rem;
+        }
+
+        img {
+            display: none;
+        }
+    }
+}
+
+@media (max-width:576px) {
+    .nav-bottom .nav_menu .nav_list {
+
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+
+    #hero .container .hero .hero__right img {
+        height: 18rem;
+    }
+}
