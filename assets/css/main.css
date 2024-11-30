@@ -1184,6 +1184,7 @@ img {
 }
 .road {
   font-size: 14px;
+  margin-top: 2rem;
 }
 .road .active-road {
   color: grey;

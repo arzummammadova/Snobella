@@ -25,6 +25,7 @@ function applySortOrder(sortOrder, products) {
 function createProductCard(product, container) {
   const card = document.createElement("div");
   card.className = "featuredproducts_cards_card shoulderproducts";
+  card.dataset.productId = product.id;
 
   const topDiv = document.createElement("div");
   topDiv.className = "featuredproducts_cards_card_top";
@@ -65,7 +66,18 @@ function createProductCard(product, container) {
   const btnCard = document.createElement("div");
   btnCard.className = "btn-card";
   btnCard.textContent = "Add to cart";
-  btnCard.addEventListener("click", () => addToCart(product));
+
+  btnCard.addEventListener("click", (event) => {
+    event.stopPropagation();
+    addToCart(product);
+  });
+
+  card.appendChild(btnCard);
+  card.addEventListener("click", (event) => {
+    event.stopPropagation();
+    localStorage.setItem('selectedProductId', product.id);
+    window.location.href = `product-details.html`;
+  });
   card.appendChild(btnCard);
 
   const newButton = document.createElement("button");
@@ -76,33 +88,89 @@ function createProductCard(product, container) {
   const heartDiv = document.createElement("div");
   heartDiv.className = "heart";
   const heartImg = document.createElement("img");
-  heartImg.src = "./assets/icons/hearticon.svg";
+  heartImg.src = favoriteProducts.includes(product.id) ? './assets/icons/hearticonfill.svg' : './assets/icons/hearticon.svg';  
   heartImg.alt = "Heart";
   heartDiv.appendChild(heartImg);
 
-  heartImg.addEventListener("click", () => toggleFavorite(product, heartImg));
-
+  heartImg.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleFavorite(product.id, heartImg); 
+  });
   card.appendChild(heartDiv);
-
   container.appendChild(card);
 }
 
-function toggleFavorite(product, heartImg) {
-  const index = favoriteProducts.findIndex(favProduct => favProduct.id === product.id);
-  if (index === -1) {
-    favoriteProducts.push(product);
-    heartImg.src = "./assets/icons/hearticonfill.svg";  
-    var toast = new Toasty();
-    toast.info("Added to favorites!");
+function toggleFavorite(productId, heartIcon) {
+ 
+  if (favoriteProducts.includes(productId)) {
+     
+      favoriteProducts = favoriteProducts.filter(id => id !== productId);
+      heartIcon.src = './assets/icons/hearticon.svg';
+      var toast = new Toasty();
+      toast.error("Product removed from favorites");
   } else {
-    favoriteProducts.splice(index, 1);
-    heartImg.src = "./assets/icons/hearticon.svg";  
-    var toast = new Toasty();
-    toast.error("Removed from favorites!");
+    
+      favoriteProducts.push(productId);
+      heartIcon.src = './assets/icons/hearticonfill.svg';
+      var toast = new Toasty();
+      toast.success("Product added to favorites");
   }
+  
 
   localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
 }
+
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+  updateCartCount();
+
+  products = await getDatas(productURL);
+  const savedSortOrder = localStorage.getItem('sortOrder') || 'normal';
+  let sortedProducts = [...products];
+  if (savedSortOrder !== 'normal') {
+    sortedProducts = applySortOrder(savedSortOrder, sortedProducts);
+  }
+
+  const limitedProducts = sortedProducts.slice(0, 12);
+  updateProductDisplay(limitedProducts);
+
+  const sections = ['#featuredproducts', '#sellingproducts', '#newproducts'];
+
+  sections.forEach(async sectionId => {
+    let section = document.querySelector(sectionId);
+    if (!section) return;
+
+    let productSubset = limitedProducts;
+    if (sectionId === '#sellingproducts') {
+      productSubset = limitedProducts.slice(0, 5);
+    }
+
+    const cardContainer = section.querySelector('.featuredproducts_cards');
+    if (!cardContainer) return;
+
+    cardContainer.innerHTML = '';
+    productSubset.forEach(product => {
+      createProductCard(product, cardContainer);
+    });
+  });
+});
+
+
+function updateFavorites() {
+  const cards = document.querySelectorAll('.featuredproducts_cards_card');
+  cards.forEach(card => {
+    const productId = card.dataset.productId;
+    const product = products.find(p => p.id == productId);
+    const heartImg = card.querySelector('.heart img');
+    
+    if (product && heartImg) {
+      const isFavorite = favoriteProducts.some(favProduct => favProduct.id === product.id);
+      heartImg.src = isFavorite ? "./assets/icons/hearticonfill.svg" : "./assets/icons/hearticon.svg";
+    }
+  });
+}
+
 
 function updateCartCount() {
   const basketCountElement = document.querySelector('.basket-count');
