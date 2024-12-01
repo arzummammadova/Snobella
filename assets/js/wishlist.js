@@ -89,36 +89,23 @@ function clearAllFavorites() {
 let clearAllButton = document.querySelector('.clear-all-button');
 clearAllButton.addEventListener('click', clearAllFavorites);
 
-// async function addToCart(product) {
-//     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-//     if (!cart.some(item => item.id === product.id)) {
-//         cart.push(product);
-//     }
-
-//     localStorage.setItem('cart', JSON.stringify(cart));
-
-//     updateBasketCount();
-// }
 async function addToCart(product) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Check if the product is already in the cart
     const existingProductIndex = cart.findIndex(item => item.id === product.id);
 
     if (existingProductIndex !== -1) {
-        // If the product is already in the cart, increase its quantity
+       
         cart[existingProductIndex].quantity += 1;
     } else {
-        // If the product is not in the cart, add it with a quantity of 1
+      
         product.quantity = 1;
         cart.push(product);
     }
 
-    // Save the updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
 
-    // Update the basket count
     updateBasketCount();
 }
 
@@ -127,21 +114,21 @@ async function updateBasketCount() {
     const basketCount = document.querySelector('.basket-count');
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-    // Total items count, considering product quantity
+  
     let totalItems = 0;
 
-    // Get all products data
+   
     const allProducts = await getDatas(productURL);
 
-    // Loop through the cart and accumulate the quantity of each product
     cart.forEach(cartItem => {
         const product = allProducts.find(p => p.id === cartItem.id);
         if (product) {
-            totalItems += cartItem.quantity; // Add quantity of the product in the cart
+            totalItems += cartItem.quantity;
         }
     });
 
-    // Update the basket count
+
+
     basketCount.textContent = totalItems;
 }
 
