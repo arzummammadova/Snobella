@@ -15,13 +15,9 @@ getDatas(productURL)
     let findProduct = products.find(
       (product) => product.id === productId
     );
-    // // console.log(findProduct.category);
-    // let seller=products.find(
-    //   product => product.category === findProduct.category
-    // )
-    // seller.forEach(sellerProduct =>
-    //   console.log(sellerProduct)
-    // );
+
+    console.log(findProduct.category)
+ 
 
     if (findProduct) {
       let productContainer = document.querySelector(".product-container");
@@ -104,20 +100,20 @@ getDatas(productURL)
       //     heartIcon.src = "./assets/icons/hearticonfill.svg";
       //     var toast = new Toasty();
       //     toast.info("Product added to wishlist !");
-         
+
       //   } else {
       //     heartIcon.src = "./assets/icons/hearticon.svg";
       //     var toast = new Toasty();
       //     toast.error("Product  deleted in wishlist !");
-         
+
       //   }
       //   localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
       // })
       heartIcon.addEventListener("click", (event) => {
         event.stopPropagation();
-      
+
         const productIndex = favoriteProducts.indexOf(findProduct.id);
-        
+
         if (productIndex === -1) {
           favoriteProducts.push(findProduct.id);
           heartIcon.src = "./assets/icons/hearticonfill.svg";
@@ -129,16 +125,16 @@ getDatas(productURL)
           var toast = new Toasty();
           toast.error("Product deleted from wishlist!");
         }
-      
+
         localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
       });
-      
+
       if (favoriteProducts.includes(findProduct.id)) {
         heartIcon.src = "./assets/icons/hearticonfill.svg";
       } else {
         heartIcon.src = "./assets/icons/hearticon.svg";
       }
-      
+
 
       let discountText = document.createElement("p");
       discountText.classList.add("p__left__desc");
@@ -165,7 +161,7 @@ getDatas(productURL)
       let tab1 = document.querySelector(".tab-content");
       tab1.textContent = findProduct.description;
 
-      
+
 
 
       let productPrice = document.createElement("div");
@@ -183,12 +179,12 @@ getDatas(productURL)
 
 
 
-     
+
       function updateCartCount() {
         const basketCountElement = document.querySelector('.basket-count');
         basketCountElement.textContent = cartCount;
       }
-      
+
       function addToCart() {
         cartCount += 1;
         localStorage.setItem('cartCount', JSON.stringify(cartCount));
@@ -196,14 +192,14 @@ getDatas(productURL)
         toast.info("Product added to basket!");
         updateCartCount();
       }
-      
 
 
-updateCartCount();
 
-      const start = document.createElement("div");
+      updateCartCount();
+
+      const start = document.createElement("img");
       start.className = "start";
-      start.innerHTML = "elave edecem..";
+      start.src = './assets/icons/review.svg';
       rightSideDiv.appendChild(start);
       rightSideDiv.appendChild(productTitle);
       rightSideDiv.appendChild(productPrice);
@@ -249,6 +245,97 @@ updateCartCount();
         currentImageIndex = (currentImageIndex + 1) % images.length;
         updateMainImage();
       });
+
+
+
+
+      function createProductCard(product, cardContainer) {
+        const card = document.createElement('div');
+        card.classList.add('featuredproducts_cards_card');
+        
+        // Card Top Section
+        const cardTop = document.createElement('div');
+        cardTop.classList.add('featuredproducts_cards_card_top');
+        const figure = document.createElement('figure');
+        const img = document.createElement('img');
+        img.src = product.image;
+        img.alt = product.title;
+        figure.appendChild(img);
+        cardTop.appendChild(figure);
+    
+        // Add 5 stars
+        for (let i = 0; i < 5; i++) {
+            const star = document.createElement('img');
+            star.classList.add('star');
+            star.src = './assets/icons/star.svg';
+            star.alt = 'Star';
+            cardTop.appendChild(star);
+        }
+        card.appendChild(cardTop);
+    
+        // Product title
+        const productTitle = document.createElement('p');
+        productTitle.textContent = product.title.substring(0, 28) + '...';
+        card.appendChild(productTitle);
+    
+        // Product price
+        const price = document.createElement('span');
+        price.classList.add('price');
+        price.textContent = `$${product.price.toFixed(2)}`;
+        card.appendChild(price);
+    
+      
+        const prevPrice = document.createElement('span');
+        prevPrice.classList.add('prevprice');
+        prevPrice.textContent = `From $${(product.price * 1.5).toFixed(2)}`;
+        card.appendChild(prevPrice);
+    
+    
+        const btnCard = document.createElement('div');
+        btnCard.classList.add('btn-card');
+        btnCard.textContent = 'Add to cart';
+        card.appendChild(btnCard);
+    
+     
+        const heartDiv = document.createElement('div');
+        heartDiv.classList.add('heart');
+        const heartIcon = document.createElement('img');
+        heartIcon.src = './assets/icons/hearticon.svg';
+        heartIcon.alt = 'Heart Icon';
+        heartDiv.appendChild(heartIcon);
+        card.appendChild(heartDiv);
+    
+      
+        btnCard.addEventListener('click', () => {
+         
+            console.log(`Added ${product.title} to cart`);
+        });
+    
+        heartDiv.addEventListener('click', () => {
+          
+            heartIcon.src = heartIcon.src.includes('hearticon.svg') ? './assets/icons/hearticonfill.svg' : './assets/icons/hearticon.svg';
+        });
+    
+     
+        cardContainer.appendChild(card);
+    }
+    
+  
+    const cardContainer = document.querySelector('.featuredproducts_cards');
+    
+  
+    cardContainer.innerHTML='';
+
+  //  const category=findProduct.category;
+  //  console.log(category);
+
+  const filterProducts=products.filter(product =>product.category==findProduct.category);
+
+    filterProducts.slice(0, 3).forEach(product => {
+        createProductCard(product, cardContainer);
+    });
+   
+    
     } else {
       console.log("Product not found");
       document.querySelector(".container").innerHTML = "<p>Product not found</p>";
@@ -347,6 +434,33 @@ function createProductCard(product) {
   return card;
 }
 
+function toggleMenu() {
+  const logo = document.getElementById('logo');
+  const navItems = document.querySelectorAll('.nav_top .search-container, .nav_top .group, .nav_top .nav-link-pages,.basket-count');
+  const burgerMenu = document.querySelector('.burger-menu');
+  burgerMenu.addEventListener("click", () => {
+      navItems.forEach(item => {
+          item.classList.toggle('none');
+          item.style.display = 'flex';
+      });
+      logo.classList.toggle('none');
+  })
+  if (window.innerWidth <= 992) {
+
+      navItems.forEach(item => {
+          item.classList.add('none');
+      });
+      burgerMenu.classList.remove('none');
+  } else {
+
+      navItems.forEach(item => {
+          item.classList.remove('none');
+      });
+      burgerMenu.classList.add('none');
+  }
+}
+
+toggleMenu() ;
 async function displayProductsByCategory(categoryId) {
   try {
     const products = await getDatas(productURL);
@@ -364,6 +478,26 @@ async function displayProductsByCategory(categoryId) {
   } catch (error) {
     console.error("Error loading products:", error);
   }
+}
+
+
+window.onscroll = function () { stickyHeader() };
+
+var header = document.querySelector(".header-bottom");
+var sticky = header.offsetTop;
+const navList = document.querySelector(".nav_list");
+// const dropdownList = document.querySelector(".control-panel");
+
+function stickyHeader() {
+    if (window.pageYOffset > sticky) {
+        navList.classList.add("none");
+        // dropdownList.classList.add("none")
+        header.classList.add("fixed-header");
+    } else {
+        // dropdownList.classList.remove("none")
+        navList.classList.remove("none");
+        header.classList.remove("fixed-header");
+    }
 }
 
 

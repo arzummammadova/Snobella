@@ -5,16 +5,19 @@
 
         .product-info {
             display: flex;
+            margin: 6rem 0rem;
             gap: 5rem;
+            height: 43rem;
 
             .left-side {
                 display: flex;
-                width: 55%;
+                width: 65%;
                 // flex-wrap: wrap;
                 gap: 4rem;
 
                 .change-image-slider {
                     width: 20%;
+                    margin-top: 4rem;
                     display: flex;
                     align-items: center;
                     flex-direction: column;
@@ -47,9 +50,9 @@
 
                     .main {
                         width: 100%;
-                        height: 450px;
+                        height: 100%;
                         position: relative;
-                        object-fit: cover;
+                        // object-fit: cover;
                     }
                 }
             }
@@ -69,13 +72,15 @@
 
 .p__left__desc {
 
-    padding: 0.8rem 2rem 0.8rem 2rem;
+    padding: 0.2rem 2rem 0.2rem 2rem;
     display: inline;
     border-radius: 1rem;
     font-size: 10px;
     background-color: map-get($map: $btnColors, $key: red);
     @include textrubik(1.4rem, 600);
     color: white;
+    position: absolute;
+    z-index: 4;
 
 }
 
@@ -88,13 +93,16 @@
     font-size: 1.2rem;
     border-radius: 0.8rem;
     cursor: pointer;
-    margin-top: 20rem;
+    margin-top: 25rem;
 
 }
 
 .start {
     font-size: 4rem;
     color: red;
+    // width: 100px;
+    height: 30px;
+    width: 320px;
 }
 
 .product-title {
@@ -149,7 +157,7 @@ ul.tabs {
     margin: 0px;
     padding: 0px;
     list-style: none;
-    margin-top: 5rem;
+    margin-top: 10rem;
 }
 
 ul.tabs li {
@@ -384,12 +392,21 @@ margin-top: 6rem;
 
 @media (max-width:900px) {
     #details .container .product-info {
-        display: flex
-    ;
+        display: flex;
+        align-items: center;
+    
         flex-direction: column;
         gap: 5rem;
     }
     #details .container .product-info .left-side{
         width: 100%;
+    }
+
+    
+    #details .container .product-info .right-side{
+        display: none;
+    }
+    #details .container .product-info .left-side .change-image-slider{
+        display: none;
     }
 }

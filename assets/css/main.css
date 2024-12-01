@@ -1222,15 +1222,18 @@ img {
 }
 #details .container .product-info {
   display: flex;
+  margin: 6rem 0rem;
   gap: 5rem;
+  height: 43rem;
 }
 #details .container .product-info .left-side {
   display: flex;
-  width: 55%;
+  width: 65%;
   gap: 4rem;
 }
 #details .container .product-info .left-side .change-image-slider {
   width: 20%;
+  margin-top: 4rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -1258,10 +1261,8 @@ img {
 }
 #details .container .product-info .left-side .main-img .main {
   width: 100%;
-  height: 450px;
+  height: 100%;
   position: relative;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .changeimg {
@@ -1275,7 +1276,7 @@ img {
 }
 
 .p__left__desc {
-  padding: 0.8rem 2rem 0.8rem 2rem;
+  padding: 0.2rem 2rem 0.2rem 2rem;
   display: inline;
   border-radius: 1rem;
   font-size: 10px;
@@ -1286,6 +1287,8 @@ img {
   line-height: 40.8px;
   text-align: left;
   color: white;
+  position: absolute;
+  z-index: 4;
 }
 
 .add-to-cart-btn {
@@ -1297,12 +1300,14 @@ img {
   font-size: 1.2rem;
   border-radius: 0.8rem;
   cursor: pointer;
-  margin-top: 20rem;
+  margin-top: 25rem;
 }
 
 .start {
   font-size: 4rem;
   color: red;
+  height: 30px;
+  width: 320px;
 }
 
 .product-title {
@@ -1350,7 +1355,7 @@ ul.tabs {
   margin: 0px;
   padding: 0px;
   list-style: none;
-  margin-top: 5rem;
+  margin-top: 10rem;
 }
 
 ul.tabs li {
@@ -1560,11 +1565,18 @@ ul.tabs li.current {
 @media (max-width: 900px) {
   #details .container .product-info {
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 5rem;
   }
   #details .container .product-info .left-side {
     width: 100%;
+  }
+  #details .container .product-info .right-side {
+    display: none;
+  }
+  #details .container .product-info .left-side .change-image-slider {
+    display: none;
   }
 }
 .close {
