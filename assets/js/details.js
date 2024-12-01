@@ -67,10 +67,10 @@ getDatas(productURL)
           setTimeout(() => {
             mainImage.style.opacity = "1";
           }, 500);
-        
+
         });
 
-        
+
 
         changeImageDiv.appendChild(img);
       });
@@ -117,7 +117,11 @@ getDatas(productURL)
       productTitle.innerText = findProduct.title;
 
 
-      
+      let tab1 = document.querySelector(".tab-content");
+      tab1.textContent = findProduct.description;
+
+      console.log(tab1);
+
 
       let productPrice = document.createElement("div");
       productPrice.classList.add("product-price");
@@ -126,9 +130,9 @@ getDatas(productURL)
       let addToCartButton = document.createElement("button");
       addToCartButton.classList.add("add-to-cart-btn");
       addToCartButton.innerText = "Add to Cart";
-      const start=document.createElement("div");
-      start.className="start";
-    start.innerHTML = "elave edecem..";
+      const start = document.createElement("div");
+      start.className = "start";
+      start.innerHTML = "elave edecem..";
       rightSideDiv.appendChild(start);
       rightSideDiv.appendChild(productTitle);
       rightSideDiv.appendChild(productPrice);
@@ -184,134 +188,135 @@ getDatas(productURL)
     document.querySelector(".container").innerHTML = "<p>Error loading product data</p>";
   });
 
-  function createProductCard(product) {
-    const card = document.createElement("div");
-    card.className = "featuredproducts_cards_card";
-    card.dataset.productId = product.id;
-  
-  
-    const cardTop = document.createElement("div");
-    cardTop.className = "featuredproducts_cards_card_top";
-  
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
-    img.src = product.image;
-    img.alt = product.title;
-    figure.appendChild(img);
-  
-    cardTop.appendChild(figure);
-  
-    
+function createProductCard(product) {
+  const card = document.createElement("div");
+  card.className = "featuredproducts_cards_card";
+  card.dataset.productId = product.id;
 
-    for (let i = 0; i < 5; i++) {
-      const star = document.createElement("img");
-      star.className = "star";
-      star.src = "./assets/icons/star.svg";
-      star.alt = "Star";
-      cardTop.appendChild(star);
-    }
-  
-    card.appendChild(cardTop);
-  
-  
-    const title = document.createElement("p");
-    title.textContent = product.title.slice(0, 30) + "..."; 
-    card.appendChild(title);
-  
-    const price = document.createElement("span");
-    price.className = "price";
-    price.textContent = `$${product.price}`;
-    card.appendChild(price);
-  
 
-    if (product.prevPrice) {
-      const prevPrice = document.createElement("span");
-      prevPrice.className = "prevprice";
-      prevPrice.textContent = `From $${product.prevPrice}`;
-      card.appendChild(prevPrice);
-    }
-  
-   
-    const btnCard = document.createElement("div");
-    btnCard.className = "btn-card";
-    btnCard.textContent = "Add to cart";
-    btnCard.addEventListener("click", (e) => {
-      e.stopPropagation();
-      addToCart(product);
-    });
-    card.appendChild(btnCard);
-  
-   
-    const newButton = document.createElement("button");
-    newButton.className = product.isNew ? "btn-lt btn-green" : "btn-lt btn-red";
-    newButton.textContent = "NEW";
-    card.appendChild(newButton);
-  
-   
-    const heartDiv = document.createElement("div");
-    heartDiv.className = "heart";
-  
-    const heartImg = document.createElement("img");
-    heartImg.src = favoriteProducts.includes(product.id)
-      ? "./assets/icons/hearticonfill.svg"
-      : "./assets/icons/hearticon.svg";
-  
-    heartImg.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleFavorite(product.id, heartImg);
-    });
-  
-    heartDiv.appendChild(heartImg);
-    card.appendChild(heartDiv);
-  
-    
-    card.addEventListener("click", () => {
-      window.location.href = `details.html?id=${product.id}`;
-    });
-  
-    return card;
+  const cardTop = document.createElement("div");
+  cardTop.className = "featuredproducts_cards_card_top";
+
+  const figure = document.createElement("figure");
+  const img = document.createElement("img");
+  img.src = product.image;
+  img.alt = product.title;
+  figure.appendChild(img);
+
+  cardTop.appendChild(figure);
+
+
+
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement("img");
+    star.className = "star";
+    star.src = "./assets/icons/star.svg";
+    star.alt = "Star";
+    cardTop.appendChild(star);
   }
-  
-  async function displayProductsByCategory(categoryId) {
-    try {
-      const products = await getDatas(productURL); // Məhsulları fetch etmək
-      const filteredProducts = products.filter(
-        (product) => product.category === categoryId
-      );
-  
-      const container = document.querySelector(".featuredproducts_cards");
-      container.innerHTML = ""; // Təmizləmək
-  
-      filteredProducts.slice(0, 3).forEach((product) => {
-        const card = createProductCard(product);
-        container.appendChild(card);
-      });
-    } catch (error) {
-      console.error("Error loading products:", error);
-    }
+
+  card.appendChild(cardTop);
+
+
+  const title = document.createElement("p");
+  title.textContent = product.title.slice(0, 30) + "...";
+  card.appendChild(title);
+
+  const price = document.createElement("span");
+  price.className = "price";
+  price.textContent = `$${product.price}`;
+  card.appendChild(price);
+
+
+  if (product.prevPrice) {
+    const prevPrice = document.createElement("span");
+    prevPrice.className = "prevprice";
+    prevPrice.textContent = `From $${product.prevPrice}`;
+    card.appendChild(prevPrice);
   }
-  
-  // Detallar səhifəsindən category ID götürmək
-  const urlParams = new URLSearchParams(window.location.search);
-  const categoryId = urlParams.get("category");
-  if (categoryId) {
-    displayProductsByCategory(categoryId);
+
+
+  const btnCard = document.createElement("div");
+  btnCard.className = "btn-card";
+  btnCard.textContent = "Add to cart";
+  btnCard.addEventListener("click", (e) => {
+    e.stopPropagation();
+    addToCart(product);
+  });
+  card.appendChild(btnCard);
+
+
+  const newButton = document.createElement("button");
+  newButton.className = product.isNew ? "btn-lt btn-green" : "btn-lt btn-red";
+  newButton.textContent = "NEW";
+  card.appendChild(newButton);
+
+
+  const heartDiv = document.createElement("div");
+  heartDiv.className = "heart";
+
+  const heartImg = document.createElement("img");
+  heartImg.src = favoriteProducts.includes(product.id)
+    ? "./assets/icons/hearticonfill.svg"
+    : "./assets/icons/hearticon.svg";
+
+  heartImg.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleFavorite(product.id, heartImg);
+  });
+
+  heartDiv.appendChild(heartImg);
+  card.appendChild(heartDiv);
+
+
+  card.addEventListener("click", () => {
+    window.location.href = `details.html?id=${product.id}`;
+  });
+
+  return card;
+}
+
+async function displayProductsByCategory(categoryId) {
+  try {
+    const products = await getDatas(productURL);
+    const filteredProducts = products.filter(
+      (product) => product.category === categoryId
+    );
+
+    const container = document.querySelector(".featuredproducts_cards");
+    container.innerHTML = "";
+
+    filteredProducts.slice(0, 3).forEach((product) => {
+      const card = createProductCard(product);
+      container.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error loading products:", error);
   }
-    
+}
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const categoryId = urlParams.get("category");
+if (categoryId) {
+  displayProductsByCategory(categoryId);
+}
 
 
 
 
-  $(document).ready(function(){
-	
-	$('ul.tabs li').click(function(){
-		var tab_id = $(this).attr('data-tab');
 
-		$('ul.tabs li').removeClass('current');
-		$('.tab-content').removeClass('current');
+$(document).ready(function () {
 
-		$(this).addClass('current');
-		$("#"+tab_id).addClass('current');
-	})
+  $('ul.tabs li').click(function () {
+    var tab_id = $(this).attr('data-tab');
+
+    $('ul.tabs li').removeClass('current');
+    $('.tab-content').removeClass('current');
+
+    $(this).addClass('current');
+    $("#" + tab_id).addClass('current');
+  })
 
 })
+

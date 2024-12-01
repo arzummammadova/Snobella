@@ -209,3 +209,27 @@ searchButton.addEventListener('click', () => {
   const filteredProducts = products.filter(product => product.title.toLowerCase().includes(searchValue));
   updateProductDisplay(filteredProducts);
 });
+
+
+
+
+
+window.onscroll = function () { stickyHeader() };
+
+var header = document.querySelector(".header-bottom");
+var sticky = header.offsetTop;
+const navList = document.querySelector(".nav_list");
+// const dropdownList = document.querySelector(".control-panel");
+
+function stickyHeader() {
+    if (window.pageYOffset > sticky) {
+        navList.classList.add("none");
+        // dropdownList.classList.add("none")
+        header.classList.add("fixed-header");
+    } else {
+        // dropdownList.classList.remove("none")
+        navList.classList.remove("none");
+        header.classList.remove("fixed-header");
+    }
+}
+

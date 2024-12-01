@@ -80,7 +80,7 @@
 }
 
 .add-to-cart-btn {
-    width: 100%;
+    width: 50%;
     padding: 1rem 1.5rem;
     background-color: map-get($map: $btnColors, $key: red);
     color: white;
@@ -149,57 +149,68 @@ ul.tabs {
     margin: 0px;
     padding: 0px;
     list-style: none;
+    margin-top: 5rem;
 }
 
 ul.tabs li {
     background: none;
     color: #222;
+    font-weight: 600;
     display: inline-block;
     padding: 10px 15px;
     cursor: pointer;
 }
 
 ul.tabs li.current {
-    background: #ededed;
+    border: none;
+    border-bottom: 1px solid red;
     color: #222;
+   
 }
 
 .tab-content {
     display: none;
-    background: #ededed;
+    // background: #ededed;
     padding: 15px;
+    font-family: Poppins;
+    font-size: 16px;
+    font-weight: 400;
+    color: #212121BF;
+
+
 }
 
 .tab-content.current {
     display: inherit;
 }
 
-.supportt{
+.supportt {
     padding: 50px 0px;
 }
+
 .support {
 
     margin: 0 auto;
-    padding: 50px 30px ;
+    padding: 50px 30px;
     justify-content: center;
     align-items: center;
     display: flex;
-   
+
     border: 1px solid #E4E4E4;
 
 }
 
 .support-cards {
- width: calc(100%/4 - 4rem);
+    width: calc(100%/4 - 4rem);
     margin: 0 auto;
 
 
 }
 
 .suppord-card {
-   border: none;
-   border-left: 1px solid #E4E4E4;
-   padding: 0px 0px 0px 30px ;
+    border: none;
+    border-left: 1px solid #E4E4E4;
+    padding: 0px 0px 0px 30px;
     display: flex;
     flex-direction: column;
     gap: .6rem;
@@ -208,7 +219,7 @@ ul.tabs li.current {
 
 }
 
-.frb{
+.frb {
     border: none;
 }
 
@@ -228,7 +239,7 @@ ul.tabs li.current {
 }
 
 .suppord-text h3 {
-   
+
     font-size: 15px;
     color: #1C313D;
     font-family: Poppins;
@@ -289,7 +300,7 @@ ul.tabs li.current {
 
 .products-our {
     padding: 30px 0px;
-    
+
 }
 
 .our-products-cards {
@@ -306,7 +317,7 @@ ul.tabs li.current {
     text-align: center;
     max-width: calc(100% / 3 - 20px);
 
- 
+
 
     box-shadow: 5px 5px 10px rgb(228, 227, 227);
     flex-direction: column;
@@ -365,4 +376,20 @@ ul.tabs li.current {
 .card-price {
     font-size: 25px;
     font-weight: 800;
+}
+
+.footer-details{
+margin-top: 6rem;
+}
+
+@media (max-width:900px) {
+    #details .container .product-info {
+        display: flex
+    ;
+        flex-direction: column;
+        gap: 5rem;
+    }
+    #details .container .product-info .left-side{
+        width: 100%;
+    }
 }
