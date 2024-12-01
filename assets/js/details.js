@@ -4,6 +4,9 @@ import { getDatas } from "./request.js";
 let products = [];
 let productId = new URLSearchParams(location.search).get("id");
 
+let favoriteProducts = JSON.parse(localStorage.getItem('favoriteProducts')) || [];
+let cartCount = JSON.parse(localStorage.getItem('cartCount')) || 0;
+
 getDatas(productURL)
   .then((data) => {
     console.log("Fetched products:", data);
@@ -95,6 +98,48 @@ getDatas(productURL)
       heartIcon.src = "./assets/icons/hearticon.svg";
       heartIcon.alt = "Heart Icon";
 
+      // heartIcon.addEventListener("click", (event) =>{
+      //   event.stopPropagation();
+      //   if (heartIcon.src.includes("hearticon.svg")) {
+      //     heartIcon.src = "./assets/icons/hearticonfill.svg";
+      //     var toast = new Toasty();
+      //     toast.info("Product added to wishlist !");
+         
+      //   } else {
+      //     heartIcon.src = "./assets/icons/hearticon.svg";
+      //     var toast = new Toasty();
+      //     toast.error("Product  deleted in wishlist !");
+         
+      //   }
+      //   localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
+      // })
+      heartIcon.addEventListener("click", (event) => {
+        event.stopPropagation();
+      
+        const productIndex = favoriteProducts.indexOf(findProduct.id);
+        
+        if (productIndex === -1) {
+          favoriteProducts.push(findProduct.id);
+          heartIcon.src = "./assets/icons/hearticonfill.svg";
+          var toast = new Toasty();
+          toast.info("Product added to wishlist!");
+        } else {
+          favoriteProducts.splice(productIndex, 1);
+          heartIcon.src = "./assets/icons/hearticon.svg";
+          var toast = new Toasty();
+          toast.error("Product deleted from wishlist!");
+        }
+      
+        localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
+      });
+      
+      if (favoriteProducts.includes(findProduct.id)) {
+        heartIcon.src = "./assets/icons/hearticonfill.svg";
+      } else {
+        heartIcon.src = "./assets/icons/hearticon.svg";
+      }
+      
+
       let discountText = document.createElement("p");
       discountText.classList.add("p__left__desc");
       discountText.innerText = "30% ";
@@ -120,7 +165,7 @@ getDatas(productURL)
       let tab1 = document.querySelector(".tab-content");
       tab1.textContent = findProduct.description;
 
-      console.log(tab1);
+      
 
 
       let productPrice = document.createElement("div");
@@ -130,6 +175,32 @@ getDatas(productURL)
       let addToCartButton = document.createElement("button");
       addToCartButton.classList.add("add-to-cart-btn");
       addToCartButton.innerText = "Add to Cart";
+
+      addToCartButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        addToCart();
+      });
+
+
+
+     
+      function updateCartCount() {
+        const basketCountElement = document.querySelector('.basket-count');
+        basketCountElement.textContent = cartCount;
+      }
+      
+      function addToCart() {
+        cartCount += 1;
+        localStorage.setItem('cartCount', JSON.stringify(cartCount));
+        var toast = new Toasty();
+        toast.info("Product added to basket!");
+        updateCartCount();
+      }
+      
+
+
+updateCartCount();
+
       const start = document.createElement("div");
       start.className = "start";
       start.innerHTML = "elave edecem..";
