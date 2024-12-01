@@ -12,6 +12,13 @@ getDatas(productURL)
     let findProduct = products.find(
       (product) => product.id === productId
     );
+    // // console.log(findProduct.category);
+    // let seller=products.find(
+    //   product => product.category === findProduct.category
+    // )
+    // seller.forEach(sellerProduct =>
+    //   console.log(sellerProduct)
+    // );
 
     if (findProduct) {
       let productContainer = document.querySelector(".product-container");
@@ -264,6 +271,7 @@ getDatas(productURL)
   
     return card;
   }
+  
   async function displayProductsByCategory(categoryId) {
     try {
       const products = await getDatas(productURL); // Məhsulları fetch etmək

@@ -1,0 +1,29 @@
+.close{
+    top:10px;
+    right: 20px;
+    position: absolute;
+}
+
+.favori{
+    gap: 4rem;
+    flex-wrap: wrap !important;
+    display: flex!important;
+}
+
+.clear-all-button{
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+    text-align: center !important;;
+    padding: 5px 10px;
+    background-color: rgb(232, 77, 77);
+    color: white !important;
+    // margin-left: 20rem;
+    border:none;
+    width: 100px;
+    border-radius: 5px;
+    font-size: 2rem;
+    font-family: Rubik;
+    margin-bottom: 6rem;
+
+}
