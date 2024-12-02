@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="./assets/fonts/stylesheet.css">
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/js/dist/toasty.min.css">
-    
- 
+
+
 </head>
 
 <body>
@@ -26,6 +26,8 @@
                         <a href="tel:+748 383 23 14">+748 383 23 14</a>
                     </div>
                     <div class="header_top_right">
+                        <!-- <a href="login.html" id="signup-link">Sign Up</a> -->
+                        <p>|</p>
                         <a href="">Terms of Use</a>
                         <p>|</p>
                         <a href="">FAQ</a>
@@ -44,17 +46,48 @@
                             <input placeholder="Search all product" type="text" class="search">
                             <img src="./assets/icons/search.svg" alt="" class="searchicon">
                         </div>
-                        <a href="login.html"><img src="./assets/icons/Group 25488.svg" alt="signup"
-                                class="group"></a>
+                        <!-- <div class="profile">
+                            <div class="profile-info">
+                                <p id="username-display">Guest</p>
 
-                        <a href="wishlist.html"><img src="./assets/icons/heart.svg" alt="" class="group basket"></a>
-                        <a href="basket.html"><img src="./assets/icons/basket.svg" alt="" class="group">
+                                <img src="./assets/images/profile.png" alt="signup" class="group">
+                            </div>
+
+                            <button id="logout-button" style="display: none;">Logout</button>
+                        </div> -->
+                       
+                        <div class="profile">
+                            <div class="profile-info">
+                                <p id="username-display">Guest</p>
+                                <img src="./assets/images/profile.png" alt="signup" class="group">
+                            </div>
+                        
+                            <div class="profile-actions">
+                                <button class="action-button" id="logout-button">Logout</button>
+                                <a href="#" class="action-button" id="wishlist-button" style="display: none;">Wishlist</a>
+                            </div>
+                        </div>
+                        
+                        
+                       
+                       
+                       
+                       
+                       
+                       
+                        <a href="#" id="wish"><img src="./assets/icons/heart.svg" alt="" class="group basket"></a>
+                        <a href="login.html" id="signup-link">Sign Up</a>
+                        <a href="admin.html" id="admin-page-link" class="admin-page" style="display: none;">Admin
+                            Page</a>
+                        <a href="#" id="cart"><img src="./assets/icons/basket.svg" alt="" class="group">
                             <div class="basket-count">1</div>
                         </a>
 
-                        <!-- <a href="details.html" class="nav-link-pages">Details</a> -->
+
+
+
                     </div>
-                    
+
                     <div class="burger-menu">
                         <img src="./assets/icons/burger.svg" alt="">
                     </div>
@@ -63,47 +96,51 @@
                 <div class="nav-bottom">
                     <div class="nav_menu">
                         <ul class="nav_list">
-                            <li class="nav_list_item"><a href="www.google.com">Evening bags</a></li>
+                            <li class="nav_list_item"><a href="eveningbags.html">Evening bags</a></li>
                             <li class="nav_list_item"><a href="shoulderbag.html">Shoulder bag</a></li>
-                            <li class="nav_list_item"><a href="index.html">Backpack</a></li>
-                            <a class="nav_list_item"><a href="index.html">Handbag</a></a>
-                            <li class="nav_list_item"><a href="index.html">Postman bag</a></li>
-                            <li class="nav_list_item"><a href="index.html">Belt bags</a></li>
+                            <li class="nav_list_item"><a href="backpack.html">Backpack</a></li>
+                            <li class="nav_list_item"><a href="handbag.html">Handbag</a></li>
+                            <li class="nav_list_item"><a href="postmanbag.html">Postman bag</a></li>
+                            <li class="nav_list_item"><a href="beltbags.html">Belt bags</a></li>
                         </ul>
                     </div>
                 </div>
-
-
                 <div class="control-panel ">
-                
+
                     <div class="containerr">
                         <div class="button">
-                          <p>Dropdown</p>
-                          <img src="https://icons.iconarchive.com/icons/custom-icon-design/flat-cute-arrows/256/Arrow-Up-icon.png" alt="" class="arrow">
+                            <p>Dropdown</p>
+                            <img src="https://icons.iconarchive.com/icons/custom-icon-design/flat-cute-arrows/256/Arrow-Up-icon.png"
+                                alt="" class="arrow">
                         </div>
                         <div class="dropdown">
-                          <a href="#" id="normal">Normal
-                            <span></span>
-                          </a>
-                          <a href="#" id="az">A-Z
-                            <span></span>
-                          </a>
-                          <a href="#" id="za">Z-A
-                            <span></span>
-                          </a>
-                          <a href="#" id="hightolow">High to Low
-                            <span></span>
-                          </a>
-                          <a href="#" id="lowtohigh">Low to High
-                            <span></span>
-                          </a>
+                            <a href="#" id="normal">Normal
+                                <span></span>
+                            </a>
+                            <a href="#" id="az">A-Z
+                                <span></span>
+                            </a>
+                            <a href="#" id="za">Z-A
+                                <span></span>
+                            </a>
+                            <a href="#" id="hightolow">High to Low
+                                <span></span>
+                            </a>
+                            <a href="#" id="lowtohigh">Low to High
+                                <span></span>
+                            </a>
                         </div>
-                      </div>
-                      
-                </div>
+                    </div>
 
+                </div>
             </div>
+
+        </div>
     </header>
+
+
+
+
     <!-- main -->
     <main>
         <section class="hero" id="hero">
@@ -238,7 +275,7 @@
                             Featured Products
                         </h2>
                         <div class="featuredproducts_title_right">
-                            <a href="details.html">View all products</a>
+                            <a href="shoulderbag.html">View all products</a>
                             <div class="right-arroww">
                                 <img src="./assets/icons/rightarrow.svg" alt="">
                             </div>
@@ -347,7 +384,7 @@
                             Best Seller
                         </h2>
                         <div class="featuredproducts_title_right">
-                            <a href="details.html">View all products</a>
+                            <a href="shoulderbag.html">View all products</a>
                             <div class="right-arroww">
                                 <img src="./assets/icons/rightarrow.svg" alt="">
                             </div>
@@ -639,10 +676,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.8/axios.min.js"
         integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <script src="./assets/js/dist/toasty.js"></script>
 
     <script src="./assets/js/script.js" type="module"></script>

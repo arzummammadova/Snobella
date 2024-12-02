@@ -94,21 +94,6 @@ getDatas(productURL)
       heartIcon.src = "./assets/icons/hearticon.svg";
       heartIcon.alt = "Heart Icon";
 
-      // heartIcon.addEventListener("click", (event) =>{
-      //   event.stopPropagation();
-      //   if (heartIcon.src.includes("hearticon.svg")) {
-      //     heartIcon.src = "./assets/icons/hearticonfill.svg";
-      //     var toast = new Toasty();
-      //     toast.info("Product added to wishlist !");
-
-      //   } else {
-      //     heartIcon.src = "./assets/icons/hearticon.svg";
-      //     var toast = new Toasty();
-      //     toast.error("Product  deleted in wishlist !");
-
-      //   }
-      //   localStorage.setItem('favoriteProducts', JSON.stringify(favoriteProducts));
-      // })
       heartIcon.addEventListener("click", (event) => {
         event.stopPropagation();
 
@@ -253,7 +238,7 @@ getDatas(productURL)
         const card = document.createElement('div');
         card.classList.add('featuredproducts_cards_card');
         
-        // Card Top Section
+
         const cardTop = document.createElement('div');
         cardTop.classList.add('featuredproducts_cards_card_top');
         const figure = document.createElement('figure');
@@ -326,8 +311,7 @@ getDatas(productURL)
   
     cardContainer.innerHTML='';
 
-  //  const category=findProduct.category;
-  //  console.log(category);
+  
 
   const filterProducts=products.filter(product =>product.category==findProduct.category);
 
@@ -524,4 +508,6 @@ $(document).ready(function () {
   })
 
 })
+
+
 

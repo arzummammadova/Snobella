@@ -3,16 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("register-form");
     const notAccountLink = document.getElementById("not-account");
     const alreadyHaveAccountLink = document.getElementById("already-have-account");
-    
-    notAccountLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleForms("register");
-    });
-
-    alreadyHaveAccountLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        toggleForms("login");
-    });
 
     if (loginForm) {
         loginForm.addEventListener("submit", (e) => {
@@ -22,40 +12,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (registerForm) {
-        const passwordInput = document.getElementById("register-password");
-        const confirmPasswordInput = document.getElementById("confirm-password");
-        passwordInput?.addEventListener("input", handlePasswordStrength);
-        confirmPasswordInput?.addEventListener("input", checkPasswordMatch);
-
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
             handleRegister();
         });
     }
 
-    function toggleForms(formType) {
-        const loginForm = document.getElementById("login-form");
-        const registerForm = document.getElementById("register-form");
-        const formTitle = document.getElementById("form-title");
-        const formDescription = document.getElementById("form-description");
-        const notAccountLink = document.getElementById("not-account");
-        const alreadyHaveAccountLink = document.getElementById("already-have-account");
-
-        if (formType === "register") {
+    if (notAccountLink) {
+        notAccountLink.addEventListener("click", () => {
             loginForm.classList.add("hidden");
             registerForm.classList.remove("hidden");
-            formTitle.textContent = "Create Account";
-            formDescription.textContent = "Please fill in the form to create an account.";
             notAccountLink.classList.add("hidden");
             alreadyHaveAccountLink.classList.remove("hidden");
-        } else {
+        });
+    }
+
+    if (alreadyHaveAccountLink) {
+        alreadyHaveAccountLink.addEventListener("click", () => {
             registerForm.classList.add("hidden");
             loginForm.classList.remove("hidden");
-            formTitle.textContent = "Login";
-            formDescription.textContent = "Please enter your details to login.";
             alreadyHaveAccountLink.classList.add("hidden");
             notAccountLink.classList.remove("hidden");
-        }
+        });
     }
 
     function handleLogin() {
@@ -68,88 +46,83 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const users = JSON.parse(localStorage.getItem("users")) || {};
+        fetch(`http://localhost:3000/users?email=${loginEmail}`)
+            .then(response => response.json())
+            .then(users => {
+                if (users.length === 0) {
+                    emailError.textContent = "Email not registered.";
+                    var toast = new Toasty();
+                    toast.error("This email is not registered. Redirecting to the register page...");
+               
+                    // setTimeout(() => {
+                    //     window.location.href = "register.html";
+                    // }, 2000);
+                    return;
+                }
 
-        if (!users[loginEmail]) {
-            emailError.textContent = "Email not registered.";
-            alert("This email is not registered. Redirecting to the register page...");
-            setTimeout(() => {
-                toggleForms("register");
-            }, 2000);
-            return;
-        }
-
-        if (users[loginEmail] !== loginPassword) {
-            emailError.textContent = "Incorrect email or password.";
-        } else {
-            alert("Login successful!");
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 2000);
-        }
+                const user = users[0];
+                if (user.password !== loginPassword) {
+                    emailError.textContent = "Incorrect email or password.";
+                } else {
+                    localStorage.setItem("loggedInUser", JSON.stringify(user));
+                   
+                    var toast = new Toasty();
+                    toast.info("Login successful!");
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 2000);
+                }
+            });
     }
 
     function handleRegister() {
-        const email = document.getElementById("register-email").value.trim();
-        const password = document.getElementById("register-password").value.trim();
+        const registerEmail = document.getElementById("register-email").value.trim();
+        const registerPassword = document.getElementById("register-password").value.trim();
         const confirmPassword = document.getElementById("confirm-password").value.trim();
         const emailError = document.getElementById("register-email-error");
+        const passwordMatch = document.getElementById("password-match");
 
-        if (!validateEmail(email)) {
+        if (!validateEmail(registerEmail)) {
             emailError.textContent = "Invalid email format.";
             return;
         }
 
-        const users = JSON.parse(localStorage.getItem("users")) || {};
-
-        if (users[email]) {
-            alert("This email is already registered. Redirecting to login...");
-            setTimeout(() => {
-                toggleForms("login");
-            }, 2000);
+        if (registerPassword !== confirmPassword) {
+            passwordMatch.textContent = "Passwords do not match.";
             return;
         }
 
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
+        fetch(`http://localhost:3000/users?email=${registerEmail}`)
+            .then(response => response.json())
+            .then(users => {
+                if (users.length > 0) {
+                    emailError.textContent = "Email already registered.";
+                    return;
+                }
 
-        users[email] = password;
-        localStorage.setItem("users", JSON.stringify(users));
+                const newUser = {
+                    email: registerEmail,
+                    password: registerPassword,
+                    username: registerEmail.split('@')[0] // or another method to get a username
+                };
 
-        alert("Account created successfully!");
-        setTimeout(() => {
-            toggleForms("login");
-        }, 2000);
-    }
-
-    function handlePasswordStrength() {
-        const passwordInput = document.getElementById("register-password");
-        const passwordStrength = document.getElementById("password-strength");
-
-        const value = passwordInput.value;
-        if (!value) {
-            passwordStrength.textContent = "";
-            return;
-        }
-
-        const strength = value.length > 8 ? (/[A-Z]/.test(value) && /[0-9]/.test(value) ? "Strong" : "Medium") : "Weak";
-        passwordStrength.textContent = `Strength: ${strength}`;
-        passwordStrength.className = strength === "Strong" ? "text-green-500" : strength === "Medium" ? "text-yellow-500" : "text-red-500";
-    }
-
-    function checkPasswordMatch() {
-        const password = document.getElementById("register-password").value;
-        const confirmPassword = document.getElementById("confirm-password").value;
-        const matchMessage = document.getElementById("password-match");
-
-        if (password && confirmPassword) {
-            matchMessage.textContent = password === confirmPassword ? "Passwords match" : "Passwords do not match";
-            matchMessage.className = password === confirmPassword ? "text-green-500" : "text-red-500";
-        } else {
-            matchMessage.textContent = "";
-        }
+                fetch("http://localhost:3000/users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var toast = new Toasty();
+                    toast.info("Registration successful!");
+                 
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 2000);
+                });
+            });
     }
 
     function validateEmail(email) {

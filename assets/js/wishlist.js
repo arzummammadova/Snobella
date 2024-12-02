@@ -1,9 +1,22 @@
 import productURL from "./baseURL.js";
 import { getDatas } from "./request.js";
 
+
 async function loadFavorites() {
+    const cardContainer = document.querySelector('.featuredproducts_container');
+    if (!cardContainer) {
+        console.error("Card container not found!");
+        return;
+    }
+
+    const loggedInUser = getLoggedInUser();
+    if (!loggedInUser || !loggedInUser.wishlist || loggedInUser.wishlist.length === 0) {
+        console.log("No favorites found.");
+        return;
+    }
+
     const allProducts = await getDatas(productURL);
-    let uniqueFavorites = [...new Set(favoriteProducts)];
+    let uniqueFavorites = [...new Set(loggedInUser.wishlist)];
 
     uniqueFavorites.forEach(id => {
         const product = allProducts.find(p => p.id === id);
@@ -17,9 +30,9 @@ function createProductCard(product, cardContainer) {
     const card = document.createElement('div');
     card.classList.add('featuredproducts_cards_card');
 
+    
     const cardTop = document.createElement('div');
     cardTop.classList.add('featuredproducts_cards_card_top');
-
     const figure = document.createElement('figure');
     const img = document.createElement('img');
     img.src = product.image;
@@ -27,6 +40,7 @@ function createProductCard(product, cardContainer) {
     figure.appendChild(img);
     cardTop.appendChild(figure);
 
+   
     for (let i = 0; i < 5; i++) {
         const star = document.createElement('img');
         star.classList.add('star');
@@ -36,9 +50,11 @@ function createProductCard(product, cardContainer) {
     }
     card.appendChild(cardTop);
 
+   
     const productTitle = document.createElement('p');
     productTitle.textContent = product.title.length > 60 ? product.title.substring(0, 60) + '...' : product.title;
     card.appendChild(productTitle);
+
 
     const price = document.createElement('span');
     price.classList.add('price');
@@ -50,115 +66,111 @@ function createProductCard(product, cardContainer) {
     prevPrice.textContent = `From $${(product.price * 1.5).toFixed(2)}`;
     card.appendChild(prevPrice);
 
+  
     const btnCard = document.createElement('div');
     btnCard.classList.add('btn-card');
     btnCard.textContent = 'Add to cart';
+    btnCard.addEventListener('click', () => addToCart(product));
     card.appendChild(btnCard);
-
-    btnCard.addEventListener('click', () => {
-        addToCart(product);
-    });
 
     const heartDiv = document.createElement('div');
     heartDiv.classList.add('heart', 'close');
     heartDiv.textContent = 'X';
+    heartDiv.addEventListener('click', () => removeFromFavorites(product.id, card));
     card.appendChild(heartDiv);
-
-    heartDiv.addEventListener('click', () => {
-        removeFromFavorites(product.id, heartDiv);
-    });
 
     cardContainer.appendChild(card);
 }
 
-function removeFromFavorites(productId, heartDiv) {
-    const updatedFavorites = favoriteProducts.filter(id => id !== productId);
-    localStorage.setItem('favoriteProducts', JSON.stringify(updatedFavorites));
 
-    heartDiv.closest('.featuredproducts_cards_card').remove();
+function removeFromFavorites(productId, cardElement) {
+    const loggedInUser = getLoggedInUser();
+    if (!loggedInUser || !loggedInUser.wishlist) return;
 
-    favoriteProducts = updatedFavorites;
+    loggedInUser.wishlist = loggedInUser.wishlist.filter(id => id !== productId);
+    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+    cardElement.remove();
 }
 
 function clearAllFavorites() {
-    localStorage.removeItem('favoriteProducts');
-    cardContainer.innerHTML = '';
-    favoriteProducts = [];
+    const loggedInUser = getLoggedInUser();
+    if (!loggedInUser || !loggedInUser.wishlist) return;
+
+    loggedInUser.wishlist = [];
+    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+
+    document.querySelector('.featuredproducts_container').innerHTML = '';
 }
 
-let clearAllButton = document.querySelector('.clear-all-button');
-clearAllButton.addEventListener('click', clearAllFavorites);
+function addToCart(product) {
+    const loggedInUser = getLoggedInUser();
 
-
-async function addToCart(product) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const existingProductIndex = cart.findIndex(item => item.id === product.id);
-
-    if (existingProductIndex !== -1) {
-       
-        cart[existingProductIndex].quantity += 1;
-    } else {
-      
-        product.quantity = 1;
-        cart.push(product);
+    if (!loggedInUser) {
+        alert("Please login!");
+        return;
     }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    if (!loggedInUser.cart) loggedInUser.cart = [];
 
+    const existingProductIndex = loggedInUser.cart.findIndex(item => item.id === product.id);
+    if (existingProductIndex !== -1) {
+        loggedInUser.cart[existingProductIndex].quantity += 1;
+    } else {
+        product.quantity = 1;
+        loggedInUser.cart.push(product);
+    }
+
+    localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
     updateBasketCount();
 }
 
-
-async function updateBasketCount() {
+function updateBasketCount() {
     const basketCount = document.querySelector('.basket-count');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-  
-    let totalItems = 0;
-
-   
-    const allProducts = await getDatas(productURL);
-
-    cart.forEach(cartItem => {
-        const product = allProducts.find(p => p.id === cartItem.id);
-        if (product) {
-            totalItems += cartItem.quantity;
-        }
-    });
-
-
+    const loggedInUser = getLoggedInUser();
+    const totalItems = loggedInUser?.cart?.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
     basketCount.textContent = totalItems;
 }
 
+function getLoggedInUser() {
+    return JSON.parse(localStorage.getItem('loggedInUser'));
+}
 
-document.addEventListener('DOMContentLoaded', updateBasketCount);
+document.addEventListener('DOMContentLoaded', () => {
+    loadFavorites();
+    updateBasketCount();
+});
 
-const cardContainer = document.querySelector('.featuredproducts_container');
-let favoriteProducts = JSON.parse(localStorage.getItem('favoriteProducts')) || [];
-loadFavorites();
 
-
+document.querySelector('.clear-all-button').addEventListener('click', clearAllFavorites);
 
 function toggleMenu() {
     const logo = document.getElementById('logo');
-    const navItems = document.querySelectorAll('.nav_top .search-container, .nav_top .group, .nav_top .nav-link-pages, .basket-count');
+    const navItems = document.querySelectorAll('.nav_top .search-container, .nav_top .group, .nav_top .nav-link-pages,.basket-count');
     const burgerMenu = document.querySelector('.burger-menu');
     burgerMenu.addEventListener("click", () => {
-      navItems.forEach(item => item.classList.toggle('none'));
-      logo.classList.toggle('none');
-    });
-  
+        navItems.forEach(item => {
+            item.classList.toggle('none');
+            item.style.display = 'flex';
+        });
+        logo.classList.toggle('none');
+    })
     if (window.innerWidth <= 992) {
-      navItems.forEach(item => item.classList.add('none'));
-      burgerMenu.classList.remove('none');
+
+        navItems.forEach(item => {
+            item.classList.add('none');
+        });
+        burgerMenu.classList.remove('none');
     } else {
-      navItems.forEach(item => item.classList.remove('none'));
-      burgerMenu.classList.add('none');
+
+        navItems.forEach(item => {
+            item.classList.remove('none');
+        });
+        burgerMenu.classList.add('none');
     }
-  }
-  
-  window.addEventListener('resize', toggleMenu);
-  toggleMenu();
-  
+}
+
+window.addEventListener('resize', toggleMenu);
+
+
+toggleMenu();

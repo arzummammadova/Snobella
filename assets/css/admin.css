@@ -1,0 +1,178 @@
+
+.content {
+    flex: 1;
+    background-color:#03897b59;
+    padding: 10px;
+  }
+  
+  header h1 {
+    font-size: 32px;
+    letter-spacing: 1rem;
+    font-family: Poppins;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+    margin-top: 5rem;
+    text-align: center;
+  }
+  
+  table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    overflow-x: scroll;
+  }
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .cover{
+    background-color: rgba(92, 91, 91, 0.637);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* input[type=number]{
+  -moz-appearance: textfield;
+  } */
+  
+  table th,
+  table td {
+  
+    padding: 8px;
+    
+    border: 1px solid #4DB6AC;
+    text-align: center;
+  }
+  td {
+    width: 600px;
+  }
+  
+  table th {
+    background-color: #f4f4f4;
+  }
+  
+  .product-image {
+    width: 50px;
+    height: 50px;
+  }
+  .edit-btn {
+    background-color: #43D167;
+    color: white;
+    border: none;
+    padding:4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .admin-container{
+    section{
+      padding: 6rem 0rem ;
+    }
+  }
+  
+  table{
+    padding: 6rem 0rem ;
+  }
+  .add-btn {
+    background-image: linear-gradient(to right, #007878af
+    , #007878dc);
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 1px;
+    margin-bottom: 10px;
+    width: 100px;
+    text-transform: uppercase;
+    margin-left: 10rem;
+  }
+  .add-btn:hover{
+    background-image: linear-gradient(to right, #a6aba4, #818a9b);
+  }
+  
+  
+  .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 10px;
+  }
+  
+  .edit-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .delete-btn:hover {
+    background-color: #F75145;
+  }
+  
+  .row {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .myModal {
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+   
+    background-color:white;
+    input{
+      padding: 1rem;
+      background-color: #a6e6ee8b;
+      border: none !important;
+    }
+  }
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 3px 10px;
+    background-color: black;
+  }
+  .register {
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+  
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background-image: linear-gradient(to right, #fbc2eb, #a6e6ee);
+  }
+  
+  
+  .submit {
+    width: 100%;
+    margin-top: 20px;
+  }
